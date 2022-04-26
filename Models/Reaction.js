@@ -11,6 +11,23 @@ const reactionSchema = new Schema(
             type: String,
             required: true,
             maxlength: 280,
+        },
+        username:{
+            type:String,
+            required: true,
+        },
+        createdAt:{
+            type: Date,
+            get: (time)=>{
+                return new Date (time).toLocaleDateString();
+            }
+        }
+    },
+    {
+        toJSON:{
+            getters: true,
         }
     }
 )
+
+module.exports = reactionSchema;
