@@ -1,4 +1,3 @@
-const { urlencoded } = require('express');
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./Routes');
