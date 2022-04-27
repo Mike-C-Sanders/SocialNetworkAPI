@@ -1,4 +1,4 @@
-const {User} = require('../Models');
+const {User, Thought} = require('../Models');
 
 module.exports = {
     //GET All Users
@@ -26,9 +26,30 @@ module.exports = {
             console.log(err);
             return res.status(500).json(err);
         })
-    }
+    },
     //Put Update user _id
-
+    updateUser(req, res){
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$set: req.body},
+            {runValidators: true, new: true}
+        ).then((user) =>{
+            !user
+                ? res.status(404).json({message: 'No user with this id!'})
+                : res.json(user)
+        }).catch((err) => res.status(500).json(err));
+    },
     //DELETE Remove user _id
     //BONUS Remove a user's associated thoughts on delete
+    deleteUser(req, res){
+        //find the user to delete and delete the user
+        User.findOneAndDelete(
+            {_id: req.params.userId}
+            //then take the user id and delete all associated thoughts (this will also delete any associated reactions because reactions are nested under the thoughts Schema);
+        ).then((user) =>{
+            !user 
+                ? res.status(404).json({message: 'No user with that ID'})
+                : Thought.deleteMany({_id: {$in: user.thoughts}})
+        })
+    }
 }
