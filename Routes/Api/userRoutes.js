@@ -1,3 +1,4 @@
+// /api/users
 const router = require('express').Router();
 
 //GET All Users
