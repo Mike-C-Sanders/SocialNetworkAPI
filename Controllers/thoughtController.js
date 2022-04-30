@@ -16,10 +16,15 @@ module.exports ={
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },
-    //Get Single THought
+    //Get Single THought & populate the reactions
     getSingleThought(req,res){
         Thought.findOne({_id: req.params.courseId})
-        .select('-__v')
+        .select('-__v').then((thoughts) =>{
+            thoughts.populate({
+                path: 'reactions',
+                select: '-__v'
+            })
+        })
         .then((thought) =>{
             !thought
                 ? res.status(404).json({message: 'No thought with that ID'})
@@ -43,8 +48,28 @@ module.exports ={
                 ? res.status(404).json({message: 'No thought with that ID'})
                 : res.json(thought)
         })
-    }
+    },
     //Put update a Thought by _id
-    
-    //Delete delete
+    updateThought(req, res){
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$set: req.body},
+            {runValidators: true, new: true}
+        ).then((thought) =>{
+            !thought   
+                ? res.status(404).json({message: 'No thought with that ID'})
+                : res.json(`Success! ${thought} has been updated`)
+        }).catch((err) => res.status(500).json(err))
+    },
+    //Delete thoughts 
+    deleteThought(req, res){
+        //find one thought and delete it
+        Thought.findOneAndDelete(
+            {_id: req.params.thoughtId}
+        ).then((thought)=>{
+            !thought   
+                ? res.status(404).json({message: 'No thought with that ID'})
+                : res.json(`Success! This Thought Was Deleted`)
+        })
+    }
 }

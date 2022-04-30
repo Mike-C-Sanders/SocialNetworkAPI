@@ -51,5 +51,30 @@ module.exports = {
                 ? res.status(404).json({message: 'No user with that ID'})
                 : Thought.deleteMany({_id: {$in: user.thoughts}})
         })
+    },
+
+    //POST to add a new friend to a user's friend list
+    addFriend(req, res){
+        //get the user who will have a new friend then push the new friend to the friends array
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$push: {friends: req.body}}
+        ).then((user)=>{
+            !user
+                ? res.status(404).json({message: 'No user with that ID'})
+                : res.status(200).json(user)
+        })
+    },
+    // DELETE to remove a friend from a user's friend list
+    deleteFriend(req, res){
+        //find the user and then delete the friend
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$pull: {friends: req.body}}
+        ).then((user) =>{
+            !user
+                ? res.status(404).json({message: 'No user with that ID'})
+                : res.status(200).json(user)
+        })
     }
 }
