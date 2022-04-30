@@ -5,7 +5,14 @@ module.exports ={
 
     //GET All Thoughts
     getThoughts(req, res){
-        Thought.find()
+        //find all thoughts and then populate the reactions and remove versioning
+        Thought.find().then((thoughts) =>{
+            thoughts.populate({
+                path: 'reactions',
+                select: '-__v'
+            })
+            
+        })
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },
@@ -20,7 +27,14 @@ module.exports ={
         })
     },
     //Post Create a new Thought - push to user thought array
-    
+    createNewThought(req, res){
+        Thought.create(req.body)
+        .then((thought) =>{
+            res.json(thought)
+        }).then((thought) =>{
+
+        })
+    }
     //Put update a Thought by _id
     
     //Delete delete
