@@ -32,7 +32,16 @@ module.exports ={
         .then((thought) =>{
             res.json(thought)
         }).then((thought) =>{
-
+            // find user and add new thought
+        return User.findOneAndUpdate(
+                { _id: body.userId },
+                { $push: { thoughts: thought._id } },
+                { new: true }
+            );
+        }).then((thought) =>{
+            !thought
+                ? res.status(404).json({message: 'No thought with that ID'})
+                : res.json(thought)
         })
     }
     //Put update a Thought by _id
