@@ -39,8 +39,8 @@ module.exports ={
         }).then((thought) =>{
             // find user and add new thought
         return User.findOneAndUpdate(
-                { _id: body.userId },
-                { $push: { thoughts: thought._id } },
+                { _id: req.body.userId },
+                { $addToSet: { thoughts: thought._id } },
                 { new: true }
             );
         }).then((thought) =>{

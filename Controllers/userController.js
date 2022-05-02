@@ -58,7 +58,7 @@ module.exports = {
         //get the user who will have a new friend then push the new friend to the friends array
         User.findOneAndUpdate(
             {_id: req.params.userId},
-            {$push: {friends: req.body}}
+            {$addToSet: {friends: req.params.friendsId}}
         ).then((user)=>{
             !user
                 ? res.status(404).json({message: 'No user with that ID'})
@@ -70,7 +70,8 @@ module.exports = {
         //find the user and then delete the friend
         User.findOneAndUpdate(
             {_id: req.params.userId},
-            {$pull: {friends: req.body}}
+            {$pull: {friends: req.params.friendsId}},
+            {new: true}
         ).then((user) =>{
             !user
                 ? res.status(404).json({message: 'No user with that ID'})
