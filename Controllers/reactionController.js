@@ -6,7 +6,7 @@ module.exports = {
     createReaction(req, res) {
         Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
-            {addToSet: {reactions: req.body}},
+            {$addToSet: {reactions: req.body}},
             {new: true}
 
         ).then((reaction)=>{
@@ -19,10 +19,14 @@ module.exports = {
     deleteReaction(req, res){
         Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
+            {$pull: {reactions: {reactionId: req.params.reactionId}}},
+            {new: true},
 
 
         ).then((reaction)=>{
-
+            !reaction
+                ? res.status(400).json({message: 'Creation of a reaction failed. Check your params or body'})
+                : res.status(200).json(reaction)
         })
     }
 }
