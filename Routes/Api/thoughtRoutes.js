@@ -1,5 +1,7 @@
 // /api/thoughts
 const router = require('express').Router();
+//reaction routes is appends the thoughts/:thoughtId route
+const reactionRoutes = require('./reactionRoutes');
 
 //all thought controller functions
 const {
@@ -23,5 +25,7 @@ router.route('/thoughts/:thoughtId')
     .get(getSingleThought)
     .put(updateThought)
     .delete(deleteThought);
+
+router.use('/thoughts/:thoughtsId', reactionRoutes);
 
 module.exports = router;
