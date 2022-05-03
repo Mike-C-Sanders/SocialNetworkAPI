@@ -16,14 +16,19 @@ const userSchema = new Schema(
             type:String,
             unique: true,
             required: true,
+            match: [
+                /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                'Enter a valid Email Address',
+            ],
             //validate the email is true using a regex and built in test
-            validate:{
-                validator: function(email){
-                    return `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`.test(email);
-                    // email.match(``)
-                },
-                message: console.log(`A valid email address is required`),
-            }
+            // validate:{
+            //     validator: function(email){
+            //         return email.match(`);
+            //         // email.match(``)
+            //     },
+            //     message: console.log(`A valid email address is required`),
+            // }
+
         },
         //array for user thoughts
         thoughts: [{

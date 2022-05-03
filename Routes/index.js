@@ -4,8 +4,8 @@ const userRoutes = require('./Api/userRoutes');
 
 //router to route all thought and reaction routes
 router.use('/api', thoughtRoutes);
-//roouter to route all user based routes
-router.use('/api', userRoutes);
+//router to route all user based routes
+router.use('/api/users', userRoutes);
 
 router.use((req, res) =>{
     return res.send('Wrong Route! Try Again!')
