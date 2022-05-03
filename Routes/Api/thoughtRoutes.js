@@ -21,7 +21,6 @@ router.route('/thoughts')
 //Delete a thought by id
 router.route('/thoughts/:thoughtId')
     .get(getSingleThought)
-    
     .put(updateThought)
     .delete(deleteThought);
 
