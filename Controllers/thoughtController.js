@@ -16,12 +16,11 @@ module.exports ={
     //Get Single THought & populate the reactions
     getSingleThought(req,res){
         Thought.findOne({_id: req.params.courseId})
-        .select('-__v').then((thoughts) =>{
-            thoughts.populate({
+        .populate({
                 path: 'reactions',
                 select: '-__v'
             })
-        })
+        .select('-__v')
         .then((thought) =>{
             !thought
                 ? res.status(404).json({message: 'No thought with that ID'})
