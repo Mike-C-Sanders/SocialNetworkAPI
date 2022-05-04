@@ -14,18 +14,18 @@ const {
 
 //GET All Thoughts
 //Post Create a new Thought - push to user thought array
-router.route('/thoughts')
+router.route('/')
     .get(getThoughts)
     .post(createNewThought);
 
 //Get Single THought
 //Put update a Thought by _id
 //Delete a thought by id
-router.route('/thoughts/:thoughtId')
+router.route('/:thoughtId')
     .get(getSingleThought)
     .put(updateThought)
     .delete(deleteThought);
 
-router.use('/thoughts/:thoughtsId', reactionRoutes);
+router.use('/:thoughtId', reactionRoutes);
 
 module.exports = router;

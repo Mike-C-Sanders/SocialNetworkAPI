@@ -6,13 +6,10 @@ module.exports ={
     //GET All Thoughts
     getThoughts(req, res){
         //find all thoughts and then populate the reactions and remove versioning
-        Thought.find().then((thoughts) =>{
-            thoughts.populate({
+        Thought.find({}).populate({
                 path: 'reactions',
                 select: '-__v'
-            })
-            
-        })
+            }).select('-__v')
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },

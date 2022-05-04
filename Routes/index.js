@@ -3,7 +3,7 @@ const thoughtRoutes = require('./Api/thoughtRoutes');
 const userRoutes = require('./Api/userRoutes');
 
 //router to route all thought and reaction routes
-router.use('/api', thoughtRoutes);
+router.use('/api/thoughts', thoughtRoutes);
 //router to route all user based routes
 router.use('/api/users', userRoutes);
 

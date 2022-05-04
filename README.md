@@ -20,9 +20,12 @@ Be sure to download Nodejs and install the required npm packages. You can find d
 
 ## Usage
 
+There are two tutorial videos showing the user routes and the thought + reaction routes. 
+
+### User Routes
 ![GIF](./GIF/example.gif)
 
-For the whole vide follow this link: [YouTube](https://youtu.be/5F7nkgKVZHs)
+User Route Video: [YouTube](https://youtu.be/5F7nkgKVZHs)
 
 ## Licensing
 
